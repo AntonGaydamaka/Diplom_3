@@ -19,21 +19,6 @@ class FeedLocators:
     )
     """Элемент личного кабинета."""
 
-    # Локаторы элементов ленты заказов
-    ORDER_FEED_ITEM_BY_ID = (
-        By.XPATH,
-        "//p[contains(@class, 'text_type_digits-default') "
-        "and contains(text(), '{order_id}')]"
-    )
-    """Элемент заказа в ленте заказов по ID."""
-
-    ORDER_ID_IN_HISTORY = (
-        By.XPATH,
-        "//p[contains(@class, 'text_type_digits-default') "
-        "and text()='#0{order_id}']"
-    )
-    """Локатор для поиска конкретного ID заказа в истории заказов."""
-
     # Локаторы всплывающих окон
     POPUP_ORDER_DETAILS_WINDOW = (
         By.CLASS_NAME,
@@ -75,3 +60,32 @@ class FeedLocators:
         "(//p[contains(@class, 'text_type_digits-default')])[last()]"
     )
     """Последний выполненный заказ в истории заказов."""
+
+    # Динамические локаторы (методы, возвращающие готовый tuple локатора)
+    @staticmethod
+    def order_feed_item_by_id(order_id):
+        """
+        Возвращает локатор элемента заказа в ленте заказов по его ID.
+
+        :param order_id: ID заказа
+        :return: tuple с типом и значением локатора
+        """
+        return (
+            By.XPATH,
+            "//p[contains(@class, 'text_type_digits-default') "
+            f"and contains(text(), '{order_id}')]"
+        )
+
+    @staticmethod
+    def order_id_in_history(order_id):
+        """
+        Возвращает локатор элемента заказа в истории заказов по его ID.
+
+        :param order_id: ID заказа
+        :return: tuple с типом и значением локатора
+        """
+        return (
+            By.XPATH,
+            "//p[contains(@class, 'text_type_digits-default') "
+            f"and text()='#0{order_id}']"
+        )

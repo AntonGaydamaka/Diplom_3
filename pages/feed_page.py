@@ -3,7 +3,6 @@ import utils.urls as urls
 
 from locators.order_feed_locators import FeedLocators
 from pages.base_page import BasePage
-from selenium.webdriver.common.by import By
 
 
 class FeedPage(BasePage):
@@ -26,10 +25,7 @@ class FeedPage(BasePage):
 
         :param order_id: ID заказа для поиска
         """
-        locator = (
-            By.XPATH,
-            FeedLocators.ORDER_FEED_ITEM_BY_ID[1].format(order_id=order_id)
-        )
+        locator = FeedLocators.order_feed_item_by_id(order_id)
         return self.click_on_element(locator)
 
     @allure.step("Дождаться появления всплывающего окна с деталями заказа")
@@ -65,9 +61,9 @@ class FeedPage(BasePage):
         return order_id
 
     @allure.step(
-            "Зафиксировать количество заказов "
-            "в разделе 'Выполнено за все время'"
-            )
+        "Зафиксировать количество заказов "
+        "в разделе 'Выполнено за все время'"
+    )
     def get_number_orders_all_time(self):
         """
         Получает количество заказов за все время.
@@ -85,9 +81,9 @@ class FeedPage(BasePage):
         return int(order_counter_text)
 
     @allure.step(
-            "Зафиксировать количество заказов "
-            "в разделе 'Выполнено за сегодня'"
-            )
+        "Зафиксировать количество заказов "
+        "в разделе 'Выполнено за сегодня'"
+    )
     def get_number_orders_today(self):
         """
         Получает количество заказов за сегодня.
@@ -112,12 +108,8 @@ class FeedPage(BasePage):
         :param order_id: ID заказа для поиска
         :return: текст найденного элемента
         """
-        locator = (
-            FeedLocators.ORDER_ID_IN_HISTORY[0],
-            FeedLocators.ORDER_ID_IN_HISTORY[1].format(order_id=order_id)
-        )
+        locator = FeedLocators.order_id_in_history(order_id)
         element = self.find_element_with_wait(locator)
-        assert element, f"Заказ с ID {order_id} не найден"
         return element.text
 
     @allure.step("Cкролл до созданного заказа в истории заказов")
